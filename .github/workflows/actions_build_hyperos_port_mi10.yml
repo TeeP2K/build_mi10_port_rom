@@ -84,17 +84,17 @@ jobs:
           sed -i "s/pack_method=.*/pack_method=aosp/" port.sh
           mkdir -p tmp/build/
           export TMPDIR=tmp/build/
-          sudo bash port.sh ${{ github.event.inputs.STOCK_URL }} ${{ github.event.inputs.PORT_URL }} 
+          sudo bash port.sh ${{ github.event.inputs.STOCK_URL https://sourceforge.net/projects/xiaomi-eu-multilang-miui-roms/files/xiaomi.eu/HyperOS-STABLE-RELEASES/HyperOS1.0/xiaomi.eu_CMI_OS1.0.5.0.TJACNXM_13.zip }} ${{ github.event.inputs.PORT_URL https://sourceforge.net/projects/xiaomi-eu-multilang-miui-roms/files/xiaomi.eu/HyperOS-STABLE-RELEASES/HyperOS2.0/xiaomi.eu_AURORA_OS2.0.8.0.VNACNXM_15.zip }} 
       - name: 5. 准备上传 | PREPARE UPLOADING
         run: |
-          ROM_FILE=$(basecmi $(find "$GITHUB_WORKSPACE"/hyperos_port/out -xiaomi.eu_CMI_OS2.0.8.0.VNACNXM_15.zip"*.zip" ! -xiaomi.eu_AURORA_OS2.0.8.0.VNACNXM_15.zip "target-files.zip"))
+          ROM_FILE=$(basecmi $(find "$GITHUB_WORKSPACE"/build-rom/out -xiaomi.eu_CMI_OS2.0.8.0.VNACNXM_15.zip"*.zip" ! -xiaomi.eu_AURORA_OS2.0.8.0.VNACNXM_15.zip "target-files.zip"))
           echo "ROM_FILE=$ROM_FILE" >>$GITHUB_ENV
           OS_VERSION=$(echo $ROM_FILE | cut -d "_" -f3)
           echo "OS_VERSION=$OS_VERSION" >>$GITHUB_ENV
-          mkdir -p "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease
-          cd "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease
-          sudo split -b 1536M -d "$GITHUB_WORKSPACE"/hyperos_port/out/$ROM_FILE $ROM_FILE
-          ls -al "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease/
+          mkdir -p "$GITHUB_WORKSPACE"/build-rom/GithubRelease
+          cd "$GITHUB_WORKSPACE"/build-rom/GithubRelease
+          sudo split -b 1536M -d "$GITHUB_WORKSPACE"/build-rom/out/$ROM_FILE $ROM_FILE
+          ls -al "$GITHUB_WORKSPACE"/build-rom/GithubRelease/
      
       - name: 9. 上传到OneDrive | PUSH ROM TO ONEDRIVE
         if:  ${{  github.event.inputs.ONEDRIVE == 'TRUE' }}
